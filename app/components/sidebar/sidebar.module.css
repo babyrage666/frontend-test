@@ -1,0 +1,31 @@
+.sidebar {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	margin-top: 20px;
+}
+
+.sidebarItem {
+	display: inherit;
+	flex-direction: inherit;
+}
+
+.sidebarTitle {
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+.sidebarField {
+	display: inherit;
+	flex-direction: inherit;
+	gap: 5px;
+	font-size: 13px;
+	font-weight: 300;
+}
+
+.sidebarInput {
+	display: inherit;
+	gap: 5px;
+}

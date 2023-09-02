@@ -1,6 +1,6 @@
 import Content from './components/content/content';
 import Sidebar from './components/sidebar/sidebar';
-import styles from './page.module.scss';
+import styles from './page.module.css';
 
 export default function Home(): JSX.Element {
   return (
