@@ -20,14 +20,14 @@ function transformData(data: IFlights) {
     const airline: IModifiedFlightsData[] = [];
     for (let leg in item.flight.legs) {
       const flight = {
-        carrier: item.flight.legs[0].segments[0].airline,
+        carrier: item.flight.legs[leg].segments[0].airline,
         price: item.flight.price.total.amount,
-        duration: item.flight.legs[0].duration,
-        arrivalAirort: item.flight.legs[0].segments[1] ? item.flight.legs[0].segments[1].arrivalAirport : item.flight.legs[0].segments[0].arrivalAirport,
-        arrivalDate: item.flight.legs[0].segments[1] ? item.flight.legs[0].segments[1].arrivalDate : item.flight.legs[0].segments[0].arrivalDate,
-        departureAirport: item.flight.legs[0].segments[0].departureAirport,
-        departureDate: item.flight.legs[0].segments[0].departureDate,
-        transfers: item.flight.legs[0].segments[1] ? 1 : 0
+        duration: item.flight.legs[leg].duration,
+        arrivalAirort: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalAirport : item.flight.legs[leg].segments[0].arrivalAirport,
+        arrivalDate: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalDate : item.flight.legs[leg].segments[0].arrivalDate,
+        departureAirport: item.flight.legs[leg].segments[0].departureAirport,
+        departureDate: item.flight.legs[leg].segments[0].departureDate,
+        transfers: item.flight.legs[leg].segments[1] ? 1 : 0
       }
       airline.push(flight);
     }
@@ -38,7 +38,7 @@ function transformData(data: IFlights) {
 
 export default async function Home() {
   const data = await getData();
-  console.log(transformData(data)[0]);
+  console.log(transformData(data)[1]);
   return (
     <main className={styles.main}>
       <Sidebar />
