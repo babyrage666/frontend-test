@@ -1,0 +1,6 @@
+.main {
+	background: white;
+	display: grid;
+	grid-template-areas: "sidebar content content content";
+	gap: 2rem;
+}
