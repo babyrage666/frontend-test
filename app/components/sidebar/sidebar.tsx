@@ -3,7 +3,7 @@ import styles from './sidebar.module.css';
 
 export default function Sidebar({ ...props }: SidebarProps): JSX.Element {
 	return (
-		<nav>
+		<nav {...props}>
 			<ul className={styles.sidebar}>
 				<li className={styles.sidebarItem}>
 					<div className={styles.sidebarTitle}>Сортировать</div>
