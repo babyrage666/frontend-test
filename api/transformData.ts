@@ -12,8 +12,10 @@ export default function transformData(data: IFlights) {
 				duration: item.flight.legs[leg].duration,
 				arrivalAirort: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalAirport : item.flight.legs[leg].segments[0].arrivalAirport,
 				arrivalDate: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalDate : item.flight.legs[leg].segments[0].arrivalDate,
+				arrivalCity: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalCity?.caption : item.flight.legs[leg].segments[0].arrivalCity?.caption,
 				departureAirport: item.flight.legs[leg].segments[0].departureAirport,
 				departureDate: item.flight.legs[leg].segments[0].departureDate,
+				departureCity: item.flight.legs[leg].segments[0].departureCity?.caption,
 				transfers: item.flight.legs[leg].segments[1] ? 1 : 0
 			}
 			airline.push(flight);

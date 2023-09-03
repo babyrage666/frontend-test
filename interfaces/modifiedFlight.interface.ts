@@ -6,7 +6,9 @@ export interface IModifiedFlightsData {
 	duration: number,
 	arrivalAirort: AirlineAlliance,
 	arrivalDate: Date,
+	arrivalCity?: string,
 	departureAirport: AirlineAlliance,
 	departureDate: Date,
+	departureCity?: string,
 	transfers: number
 }
