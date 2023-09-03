@@ -24,6 +24,9 @@ function calculateFlightTime(dep: Date, arr: Date) {
 }
 
 export default function Card({ flight, className, ...props }: CardProps): JSX.Element {
+	if (!flight) {
+		return <></>;
+	}
 	const [forward, back] = flight;
 
 	const departureDate = convertDate(forward.departureDate);

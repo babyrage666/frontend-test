@@ -29,12 +29,13 @@ export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 
 	const changePriceFilter = (event: ChangeEvent<HTMLInputElement>): void => {
 		if (event.currentTarget.name === 'priceFrom') {
+
 			if (parseInt(event.currentTarget.value)) {
 				setPriceFilter && setPriceFilter([parseInt(event.currentTarget.value), priceFilter[1]])
 			}
 		} else {
 			if (parseInt(event.currentTarget.value)) {
-				setPriceFilter && setPriceFilter([priceFilter[0], parseInt(event.currentTarget.value)])
+				setPriceFilter && setPriceFilter([priceFilter[0], parseInt(event.currentTarget.value) < 10 ? Infinity : parseInt(event.currentTarget.value)])
 			}
 		}
 	}
