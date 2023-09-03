@@ -1,48 +1,63 @@
 
+'use client';
+
+import { DetailedHTMLProps, HTMLAttributes, PropsWithChildren, createContext, useState } from 'react';
 import Content from './components/content/content';
 import Sidebar from './components/sidebar/sidebar';
 import styles from './page.module.css';
-import path from 'path';
-import fsPromises from 'fs/promises';
-import { IFlights } from '@/interfaces/flight.interface';
 import { IModifiedFlightsData } from '@/interfaces/modifiedFlight.interface';
 
-//Получение данных с локального JSON
-async function getData() {
-  const resJson = await fsPromises.readFile(path.join(process.cwd(), 'api/flights.json'));
-  const res: IFlights = JSON.parse(resJson.toString());
-  return res;
+interface HomeProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
+  data: IModifiedFlightsData[][]
 }
 
-function transformData(data: IFlights) {
-  const flights: IModifiedFlightsData[][] = [];
-  for (let item of data.result.flights) {
-    const airline: IModifiedFlightsData[] = [];
-    for (let leg in item.flight.legs) {
-      const flight = {
-        carrier: item.flight.legs[leg].segments[0].airline,
-        price: item.flight.price.total.amount,
-        duration: item.flight.legs[leg].duration,
-        arrivalAirort: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalAirport : item.flight.legs[leg].segments[0].arrivalAirport,
-        arrivalDate: item.flight.legs[leg].segments[1] ? item.flight.legs[leg].segments[1].arrivalDate : item.flight.legs[leg].segments[0].arrivalDate,
-        departureAirport: item.flight.legs[leg].segments[0].departureAirport,
-        departureDate: item.flight.legs[leg].segments[0].departureDate,
-        transfers: item.flight.legs[leg].segments[1] ? 1 : 0
-      }
-      airline.push(flight);
-    }
-    flights.push(airline);
-  }
-  return flights;
+export enum Sort {
+  PRICE_INCREASE,
+  PRICE_DECREASE,
+  TIME_DECREASE
 }
 
-export default async function Home() {
-  const data = await getData();
-  console.log(transformData(data)[1]);
+export interface IPageContext {
+  sort: Sort,
+  transferFilter: boolean,
+  noTransferFilter: boolean,
+  priceFilter: [number, number]
+  setSort?: (newSortState: Sort) => void,
+  setTransferFilter?: () => void,
+  setNoTransferFilter?: () => void,
+  setPriceFilter?: (newPriceFilterState: [number, number]) => void
+}
+
+export const PageContext = createContext<IPageContext>({
+  sort: Sort.PRICE_INCREASE,
+  transferFilter: false,
+  noTransferFilter: false,
+  priceFilter: [0, Infinity]
+});
+
+export const PageContextProvider = ({ sort, transferFilter, noTransferFilter, priceFilter, children }: PropsWithChildren<IPageContext>): JSX.Element => {
+  const [sortState, setSortState] = useState<Sort>(sort);
+  const setSort = (newSortState: Sort) => setSortState(newSortState);
+  const [transferFilterState, setTransferFilterState] = useState<boolean>(transferFilter);
+  const setTransferFilter = () => setTransferFilterState(!transferFilterState);
+  const [noTransferFilterState, setNoTransferFilterState] = useState<boolean>(noTransferFilter);
+  const setNoTransferFilter = () => setNoTransferFilterState(!noTransferFilterState);
+  const [priceFilterState, setPriceFilterState] = useState<[number, number]>(priceFilter);
+  const setPriceFilter = (newPriceFilterState: [number, number]) => setPriceFilterState(newPriceFilterState);
   return (
-    <main className={styles.main}>
-      <Sidebar />
-      <Content />
-    </main>
+    <PageContext.Provider value={{ sort: sortState, transferFilter: transferFilterState, noTransferFilter: noTransferFilterState, priceFilter: priceFilterState, setSort, setTransferFilter, setNoTransferFilter, setPriceFilter }}>
+      {children}
+    </PageContext.Provider>
+  )
+}
+
+export default function Home({ data, ...props }: HomeProps) {
+  return (
+    <PageContextProvider sort={Sort.PRICE_INCREASE} transferFilter={false} noTransferFilter={false} priceFilter={[0, Infinity]}>
+      <main className={styles.main} {...props}>
+        <Sidebar data={data} />
+        <Content />
+      </main>
+    </PageContextProvider>
   )
 }
