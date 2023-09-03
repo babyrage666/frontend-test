@@ -1,6 +1,15 @@
 .main {
 	background: white;
 	display: grid;
-	grid-template-areas: "sidebar content content content";
+	grid-template-areas: "sidebar cont cont cont";
 	gap: 2rem;
+}
+
+.sidebar {
+	grid-area: sidebar;
+	padding-left: 40px;
+}
+
+.content {
+	grid-area: cont;
 }

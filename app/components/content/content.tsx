@@ -1,17 +1,14 @@
 'use client';
 import { useContext } from 'react';
 import { ContentProps } from './content.props';
+import { PageContext } from '@/app/page';
+import Card from '@/components/card/card';
 
-export default function Content({ ...props }: ContentProps): JSX.Element {
+export default function Content({ data, ...props }: ContentProps): JSX.Element {
+	const { sort, transferFilter, noTransferFilter, priceFilter } = useContext(PageContext);
 	return (
 		<div {...props}>
-			<div>
-				<div>LOT</div>
-				<div>
-					<div>21049 P</div>
-					<div>Стоимость одного пассажира</div>
-				</div>
-			</div>
+			<Card />
 		</div>
 	);
 };

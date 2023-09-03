@@ -30,8 +30,8 @@ export interface IPageContext {
 
 export const PageContext = createContext<IPageContext>({
   sort: Sort.PRICE_INCREASE,
-  transferFilter: false,
-  noTransferFilter: false,
+  transferFilter: true,
+  noTransferFilter: true,
   priceFilter: [0, Infinity]
 });
 
@@ -53,10 +53,10 @@ export const PageContextProvider = ({ sort, transferFilter, noTransferFilter, pr
 
 export default function Home({ data, ...props }: HomeProps) {
   return (
-    <PageContextProvider sort={Sort.PRICE_INCREASE} transferFilter={false} noTransferFilter={false} priceFilter={[0, Infinity]}>
+    <PageContextProvider sort={Sort.PRICE_INCREASE} transferFilter={true} noTransferFilter={true} priceFilter={[0, Infinity]}>
       <main className={styles.main} {...props}>
-        <Sidebar data={data} />
-        <Content />
+        <Sidebar data={data} className={styles.sidebar} />
+        <Content data={data} className={styles.content} />
       </main>
     </PageContextProvider>
   )

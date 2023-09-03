@@ -21,9 +21,9 @@ export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 
 	const changeTransferFilter = (event: ChangeEvent<HTMLInputElement>): void => {
 		if (event.currentTarget.name === 'transfer') {
-			setTransferFilter && setTransferFilter();
-		} else {
 			setNoTransferFilter && setNoTransferFilter();
+		} else {
+			setTransferFilter && setTransferFilter();
 		}
 	}
 
@@ -78,9 +78,7 @@ export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 	}
 
 	const filteredAirlines = filterAirlines();
-	console.log(filteredAirlines);
 	const showAirlines = airlinesComponent(filteredAirlines);
-	console.log(showAirlines);
 	return (
 		<nav {...props}>
 			<ul className={styles.sidebar}>
