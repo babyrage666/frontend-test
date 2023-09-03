@@ -1,6 +1,7 @@
 import { IFlights } from '@/interfaces/flight.interface';
 import { IModifiedFlightsData } from '@/interfaces/modifiedFlight.interface';
 
+//функция для трасформации данных из api, чтобы убрать не нужную в приложении информацию
 export default function transformData(data: IFlights) {
 	const flights: IModifiedFlightsData[][] = [];
 	for (let item of data.result.flights) {

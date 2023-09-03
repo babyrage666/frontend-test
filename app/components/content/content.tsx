@@ -6,6 +6,8 @@ import Card from '@/components/card/card';
 import { IModifiedFlightsData } from '@/interfaces/modifiedFlight.interface';
 import styles from './content.module.css'
 
+
+//функция соритровки
 function sortCards(sort: Sort, data: IModifiedFlightsData[][]): IModifiedFlightsData[][] {
 	if (sort === Sort.PRICE_INCREASE || sort === Sort.PRICE_DECREASE) {
 		const sortedData = data.sort((a, b) => {
@@ -32,8 +34,9 @@ function sortCards(sort: Sort, data: IModifiedFlightsData[][]): IModifiedFlights
 	}
 }
 
+//функция применения фильтров
 function filterCards(data: IModifiedFlightsData[][], transferFilter: boolean, noTransferFilter: boolean, priceFilter: [number, number]) {
-	const temp = data.filter(item => {
+	const temp: IModifiedFlightsData[][] = data.filter(item => {
 		return (parseInt(item[0].price) >= priceFilter[0]) && (parseInt(item[0].price) <= priceFilter[1])
 	});
 	if (transferFilter && noTransferFilter) {
@@ -50,9 +53,10 @@ function filterCards(data: IModifiedFlightsData[][], transferFilter: boolean, no
 	}
 }
 
+//компонент основного контента
 export default function Content({ data, ...props }: ContentProps): JSX.Element {
 	const { sort, transferFilter, noTransferFilter, priceFilter } = useContext(PageContext);
-	const flight = filterCards(sortCards(sort, data), transferFilter, noTransferFilter, priceFilter);
+	const flight: IModifiedFlightsData[][] = filterCards(sortCards(sort, data), transferFilter, noTransferFilter, priceFilter);
 	return (
 		<div {...props}>
 			<Card className={styles.card} flight={flight[0]} />

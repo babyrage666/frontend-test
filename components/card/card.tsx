@@ -1,7 +1,7 @@
 import { CardProps } from './card.props';
 import styles from './card.module.css';
 
-
+//функция для конвертирования даты в нужный формат
 function convertDate(date: Date): string[] {
 	const dateOptions: Intl.DateTimeFormatOptions = {
 		hour: "2-digit",
@@ -13,7 +13,7 @@ function convertDate(date: Date): string[] {
 	const rawDate = new Date(date);
 	return new Intl.DateTimeFormat('ru-RU', dateOptions).format(rawDate).split(' ');
 }
-
+//функция вычесления длительности полета
 function calculateFlightTime(dep: Date, arr: Date) {
 	const departure = new Date(dep);
 	const arrival = new Date(arr);
@@ -23,6 +23,7 @@ function calculateFlightTime(dep: Date, arr: Date) {
 	return [days, hours];
 }
 
+//компонент карточки с информацие о рейсах
 export default function Card({ flight, className, ...props }: CardProps): JSX.Element {
 	if (!flight) {
 		return <></>;

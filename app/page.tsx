@@ -28,6 +28,7 @@ export interface IPageContext {
   setPriceFilter?: (newPriceFilterState: [number, number]) => void
 }
 
+//Общий контекст, где хранятся состояния сортировки и фильтров
 export const PageContext = createContext<IPageContext>({
   sort: Sort.PRICE_INCREASE,
   transferFilter: true,

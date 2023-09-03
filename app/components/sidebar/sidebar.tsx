@@ -3,8 +3,10 @@ import styles from './sidebar.module.css';
 import { ChangeEvent, useContext } from 'react';
 import { PageContext, Sort } from '@/app/page';
 
+//компонент сайдбар-меню
 export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 	const { sort, transferFilter, noTransferFilter, priceFilter, setSort, setTransferFilter, setNoTransferFilter, setPriceFilter } = useContext(PageContext);
+
 	const selectSort = (event: ChangeEvent<HTMLInputElement>): void => {
 		switch (true) {
 			case event.currentTarget.id == 'one':
@@ -39,7 +41,7 @@ export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 			}
 		}
 	}
-
+	//создание упрощенныго массива данных для отображения в сайдбаре
 	const filterAirlines = () => {
 		const modData: string[][] = data.map(flight => {
 			return [flight[0].carrier.caption, flight[0].price];
@@ -65,6 +67,7 @@ export default function Sidebar({ data, ...props }: SidebarProps): JSX.Element {
 		return modData;
 	}
 
+	//функция вывода авиакомпание в сайдбаре
 	const airlinesComponent = (airlines: string[][]) => {
 		return airlines.map(airline => {
 			return (
