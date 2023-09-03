@@ -23,7 +23,7 @@ function calculateFlightTime(dep: Date, arr: Date) {
 	return [days, hours];
 }
 
-export default function Card({ flight, ...props }: CardProps): JSX.Element {
+export default function Card({ flight, className, ...props }: CardProps): JSX.Element {
 	const [forward, back] = flight;
 
 	const departureDate = convertDate(forward.departureDate);
@@ -34,7 +34,7 @@ export default function Card({ flight, ...props }: CardProps): JSX.Element {
 	const backArrivalDate = convertDate(back.arrivalDate);
 	const backFlightTime = calculateFlightTime(back.departureDate, back.arrivalDate);
 	return (
-		<div {...props}>
+		<div className={className} {...props}>
 			<div className={styles.banner}>
 				<div className={styles.bannerTitle}>{forward.carrier.caption}</div>
 				<div className={styles.bannerInfo}>
